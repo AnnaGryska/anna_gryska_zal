@@ -1,0 +1,52 @@
+zadanie 2
+
+select
+customerName imie,
+contactLastName nazwisko,
+count(*) liczba_zamowien
+from customers c join orders o
+on c.customerNumber = o.customerNumber
+group by imie, nazwisko
+
+zadanie 4 
+a)
+SELECT 
+productName nazwa,
+YEAR(r.orderDate) rok,
+count(r.orderDate) ilosc
+FROM products p INNER JOIN orderdetails o 
+	ON p.productCode = o.productCode
+INNER JOIN orders r 
+	on o.orderNumber = r.orderNumber
+	WHERE p.productName LIKE "%1952 Alpine Renault 1300%"
+	OR p.productName LIKE "%1968 Ford Mustang%"
+	OR p.productName LIKE "%1996 Moto Guzzi 1100i%"
+	GROUP BY productName, YEAR(r.orderDate)
+    order by rok
+
+
+b)
+
+select
+productName model,
+year(o.shippedDate) rok,
+month(o.shippedDate) miesiac,
+sum(r.quantityOrdered*r.priceEach) suma
+from products p join orderdetails r 
+on p.productCode = r.productCode
+	join orders o
+    on o.orderNumber = r.orderNumber
+    Where 
+    productName like '%Harley%'
+group by year(o.shippedDate), model, miesiac
+order by  miesiac, rok
+
+
+c)
+
+select
+productLine produkt,
+count(*) ilosc
+from products
+	group by productLine
+    having ilosc between 10 and 20
